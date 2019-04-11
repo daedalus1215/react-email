@@ -1,2 +1,2 @@
-# react-email
-Simulating a email app with React.
+# barebones-react
+A barebones react setup. Just tell Parcel to bundle index.html

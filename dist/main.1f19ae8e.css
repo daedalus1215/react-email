@@ -1,0 +1,43 @@
+.email-row {
+    overflow: hidden;
+
+}
+
+.email-date, 
+.email-from, 
+.email-subject, 
+.email-body {
+    text-overflow: ellipsis;
+    display: inline-block;
+    overflow: hidden;
+    white-space: nowrap;
+}
+
+
+.email-date {
+    width: 10%;
+}
+
+.email-from {
+    width: 15%;
+}
+
+.email-subject {
+    width: 20%;
+}
+
+.email-body {
+    width: 55%
+}
+body {
+    background-color: brown;
+}
+
+#app-container {
+    width: 800px;
+    margin: auto;
+    background-color: white;
+    padding: 1em;
+}
+
+/*# sourceMappingURL=/main.1f19ae8e.css.map */
