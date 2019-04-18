@@ -3,6 +3,11 @@
 
 }
 
+.email-is-read {
+    background-color: rgba(0,0,0, 0.2);
+    
+}
+
 .email-date, 
 .email-from, 
 .email-subject, 

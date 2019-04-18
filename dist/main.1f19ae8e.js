@@ -29871,10 +29871,22 @@ function (_Component) {
   }
 
   _createClass(EmailRow, [{
+    key: "getClassName",
+    value: function getClassName() {
+      var className = "email-row";
+      var emailId = this.props.email.id;
+
+      if (this.props.isRead[emailId]) {
+        className += " email-is-read";
+      }
+
+      return className;
+    }
+  }, {
     key: "render",
     value: function render() {
       return _react.default.createElement("div", {
-        id: "email-row"
+        className: this.getClassName()
       }, _react.default.createElement("div", {
         className: "email-date"
       }, this.props.email.date), _react.default.createElement("div", {
@@ -29994,9 +30006,9 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
 
 function _possibleConstructorReturn(self, call) { if (call && (_typeof(call) === "object" || typeof call === "function")) { return call; } return _assertThisInitialized(self); }
 
-function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
-
 function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return _getPrototypeOf(o); }
+
+function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
 
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); if (superClass) _setPrototypeOf(subClass, superClass); }
 
@@ -30007,15 +30019,27 @@ var Inbox =
 function (_Component) {
   _inherits(Inbox, _Component);
 
-  function Inbox() {
+  function Inbox(props) {
+    var _this;
+
     _classCallCheck(this, Inbox);
 
-    return _possibleConstructorReturn(this, _getPrototypeOf(Inbox).apply(this, arguments));
+    _this = _possibleConstructorReturn(this, _getPrototypeOf(Inbox).call(this, props));
+    _this.handleClick = _this.handleClick.bind(_assertThisInitialized(_this));
+    return _this;
   }
 
   _createClass(Inbox, [{
+    key: "handleClick",
+    value: function handleClick(e) {
+      var emailId = e.currentTarget.id;
+      this.props.handler(emailId);
+    }
+  }, {
     key: "render",
     value: function render() {
+      var _this2 = this;
+
       return _react.default.createElement("div", {
         id: "inbox"
       }, _react.default.createElement("h1", null, "Inbox"), _react.default.createElement("p", null, "You have ", this.props.emails.length, " emails "), _react.default.createElement("div", {
@@ -30023,9 +30047,12 @@ function (_Component) {
       }, this.props.emails.map(function (email, index) {
         return _react.default.createElement(_reactRouterDom.Link, {
           to: "/read/".concat(email.id),
-          key: index
+          key: index,
+          id: email.id,
+          onClick: _this2.handleClick
         }, _react.default.createElement(_EmailRow.default, {
-          email: email
+          email: email,
+          isRead: _this2.props.isRead
         }));
       })));
     }
@@ -30956,9 +30983,9 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
 
 function _possibleConstructorReturn(self, call) { if (call && (_typeof(call) === "object" || typeof call === "function")) { return call; } return _assertThisInitialized(self); }
 
-function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
-
 function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return _getPrototypeOf(o); }
+
+function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
 
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); if (superClass) _setPrototypeOf(subClass, superClass); }
 
@@ -30976,12 +31003,25 @@ function (_Component) {
 
     _this = _possibleConstructorReturn(this, _getPrototypeOf(App).call(this, props));
     _this.state = {
-      emails: _MOCK_DATA.default
+      emails: _MOCK_DATA.default,
+      isRead: {
+        "9e7723f3-1a7e-446b-8f65-e8e231a79fb2": true
+      }
     };
+    _this.handleClickOnEmail = _this.handleClickOnEmail.bind(_assertThisInitialized(_this));
     return _this;
   }
 
   _createClass(App, [{
+    key: "handleClickOnEmail",
+    value: function handleClickOnEmail(emailId) {
+      var readEmails = this.state.isRead;
+      readEmails[emailId] = true;
+      this.setState({
+        isRead: readEmails
+      });
+    }
+  }, {
     key: "render",
     value: function render() {
       var _this2 = this;
@@ -30993,7 +31033,9 @@ function (_Component) {
         path: "/",
         component: function component() {
           return _react.default.createElement(_Inbox.default, {
-            emails: _this2.state.emails
+            emails: _this2.state.emails,
+            isRead: _this2.state.isRead,
+            handler: _this2.handleClickOnEmail
           });
         }
       }), _react.default.createElement(_reactRouterDom.Route, {
@@ -31052,7 +31094,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "61918" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "61314" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};

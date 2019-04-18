@@ -12,8 +12,24 @@ export default class App extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            emails: EMAILS
+            emails: EMAILS,
+            isRead: {
+                "9e7723f3-1a7e-446b-8f65-e8e231a79fb2": true
+            }
         }
+
+        this.handleClickOnEmail = this.handleClickOnEmail.bind(this);
+    }
+
+
+    handleClickOnEmail(emailId) {
+        let readEmails = this.state.isRead;
+        
+        readEmails[emailId] = true;
+
+        this.setState({
+            isRead: readEmails
+        });
     }
 
     render() {
@@ -22,7 +38,7 @@ export default class App extends Component {
                 <BrowserRouter>
                     <Nav />
                     <Route exact path="/" component={() => (
-                        <Inbox emails={this.state.emails} />
+                        <Inbox emails={this.state.emails}  isRead={this.state.isRead} handler={this.handleClickOnEmail}/>
                     )} />
                     <Route exact path="/read/:id" component={() => (
                         <EmailRead emails={this.state.emails} />
