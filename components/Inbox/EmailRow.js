@@ -6,13 +6,23 @@ export default class EmailRow extends Component {
 
     getClassName() {
         let className = "email-row";
-        let emailId = this.props.email.id;
-        if (this.props.isRead[emailId]) {
+
+        if (this.isEmailIdChecked()) {
             className += " email-is-read";
         }
         return className;
     }
     
+
+    isEmailIdChecked() {
+        let emailId = this.props.email.id;
+        
+        if (this.props.isRead[emailId]) {
+            return true;
+        }
+
+        return false;
+    }
 
     onClickHandler(e) {
         e.preventDefault();
@@ -20,10 +30,14 @@ export default class EmailRow extends Component {
         this.props.handler(emailId)
     }
 
+    isChecked() {
+        return this.isEmailIdChecked();
+    }
+
     render() {
         return <div className={this.getClassName()}>
             <div className="email-toggle-is-read">
-                <input type="checkbox" onClick={this.onClickHandler}/>
+                <input type="checkbox" onClick={this.onClickHandler} checked={this.isChecked()}/>
             </div>
             <div className="email-date">{this.props.email.date}</div>
             <div className="email-from">{this.props.email.email}</div>
