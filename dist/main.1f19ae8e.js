@@ -29874,13 +29874,23 @@ function (_Component) {
     key: "getClassName",
     value: function getClassName() {
       var className = "email-row";
-      var emailId = this.props.email.id;
 
-      if (this.props.isRead[emailId]) {
+      if (this.isEmailIdChecked()) {
         className += " email-is-read";
       }
 
       return className;
+    }
+  }, {
+    key: "isEmailIdChecked",
+    value: function isEmailIdChecked() {
+      var emailId = this.props.email.id;
+
+      if (this.props.isRead[emailId]) {
+        return true;
+      }
+
+      return false;
     }
   }, {
     key: "onClickHandler",
@@ -29888,6 +29898,11 @@ function (_Component) {
       e.preventDefault();
       var emailId = this.props.email.id;
       this.props.handler(emailId);
+    }
+  }, {
+    key: "isChecked",
+    value: function isChecked() {
+      return this.isEmailIdChecked();
     }
   }, {
     key: "render",
@@ -29898,7 +29913,8 @@ function (_Component) {
         className: "email-toggle-is-read"
       }, _react.default.createElement("input", {
         type: "checkbox",
-        onClick: this.onClickHandler
+        onClick: this.onClickHandler,
+        checked: this.isChecked()
       })), _react.default.createElement("div", {
         className: "email-date"
       }, this.props.email.date), _react.default.createElement("div", {
