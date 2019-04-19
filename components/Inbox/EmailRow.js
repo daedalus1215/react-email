@@ -13,8 +13,18 @@ export default class EmailRow extends Component {
         return className;
     }
     
+
+    onClickHandler(e) {
+        e.preventDefault();
+        let emailId = this.props.email.id;
+        this.props.handler(emailId)
+    }
+
     render() {
         return <div className={this.getClassName()}>
+            <div className="email-toggle-is-read">
+                <input type="checkbox" onClick={this.onClickHandler}/>
+            </div>
             <div className="email-date">{this.props.email.date}</div>
             <div className="email-from">{this.props.email.email}</div>
             <div className="email-subject">{this.props.email.subject}</div>
