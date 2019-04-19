@@ -4,27 +4,30 @@
 }
 
 .email-is-read {
-    background-color: rgba(0,0,0, 0.2);
-    
+    background-color: rgba(0,0,0, 0.2);    
 }
 
 .email-date, 
 .email-from, 
 .email-subject, 
-.email-body {
+.email-body,
+.email-toggle-is-read {
     text-overflow: ellipsis;
     display: inline-block;
     overflow: hidden;
     white-space: nowrap;
 }
 
+.email-toggle-is-read {
+    width: 3%;
+}
 
 .email-date {
     width: 10%;
 }
 
 .email-from {
-    width: 15%;
+    width: 20%;
 }
 
 .email-subject {
@@ -32,5 +35,5 @@
 }
 
 .email-body {
-    width: 55%
+    width: 45%
 }

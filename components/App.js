@@ -23,8 +23,7 @@ export default class App extends Component {
 
 
     handleClickOnEmail(emailId) {
-        let readEmails = this.state.isRead;
-        
+        let readEmails = this.state.isRead;        
         readEmails[emailId] = true;
 
         this.setState({
@@ -41,7 +40,7 @@ export default class App extends Component {
                         <Inbox emails={this.state.emails}  isRead={this.state.isRead} handler={this.handleClickOnEmail}/>
                     )} />
                     <Route exact path="/read/:id" component={() => (
-                        <EmailRead emails={this.state.emails} />
+                        <EmailRead emails={this.state.emails} handler={this.handleClickOnEmail} />
                     )} />
                 </BrowserRouter>
             </div>

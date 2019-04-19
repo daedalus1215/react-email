@@ -2,7 +2,6 @@ import React, {Component} from 'react';
 import { Link } from 'react-router-dom';
 
 import EmailRow from './EmailRow.js';
-import EmailRead from './EmailRead.js';
 
 export default class Inbox extends Component {
 
@@ -24,7 +23,7 @@ export default class Inbox extends Component {
             <div id="all-emails">
                 {this.props.emails.map((email, index) => {
                     return <Link to={`/read/${email.id}`} key={index}  id={email.id} onClick={this.handleClick}>
-                        <EmailRow email={email} isRead={this.props.isRead}/>
+                        <EmailRow email={email} isRead={this.props.isRead} handler={this.props.handler}/>
                     </Link>
                 })}
             </div>
