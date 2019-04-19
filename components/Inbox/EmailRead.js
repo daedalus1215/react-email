@@ -2,6 +2,13 @@ import React from 'react';
 import { withRouter, Link } from 'react-router-dom';
 
 class EmailRead extends React.Component {
+
+    componentWillUnmount() {
+        const emailId = this.props.match.params.id;
+        this.props.handler(emailId);
+    }
+
+
     render() {
         const emailId = this.props.match.params.id;
         const email = this.props.emails.filter(email => {
